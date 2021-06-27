@@ -123,8 +123,6 @@ class XAsyncSocketsPool :
                     for socket in socketsList :
                         asyncSocket = self._asyncSockets.get(id(socket), None)
                         if asyncSocket and self._socketListAdd(socket, self._handlingList) :
-                            print("_handlingList len: %d"%len(self._handlingList))
-                            print("_asyncSockets len: %d"%len(self._asyncSockets))
                             if socketsList is ex :
                                 asyncSocket.OnExceptionalCondition()
                             elif socketsList is wr :
