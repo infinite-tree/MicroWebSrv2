@@ -93,7 +93,7 @@ class XAsyncSocketsPool :
 
     def _socketListRemove(self, socket, socketsList) :
         self._opLock.acquire()
-        ok = (id(socket) in self._asyncSockets and socket in socketsList)
+        ok = (socket in socketsList)
         if ok :
             socketsList.remove(socket)
         self._opLock.release()
@@ -123,6 +123,8 @@ class XAsyncSocketsPool :
                     for socket in socketsList :
                         asyncSocket = self._asyncSockets.get(id(socket), None)
                         if asyncSocket and self._socketListAdd(socket, self._handlingList) :
+                            print("_handlingList len: %d"%len(self._handlingList))
+                            print("_asyncSockets len: %d"%len(self._asyncSockets))
                             if socketsList is ex :
                                 asyncSocket.OnExceptionalCondition()
                             elif socketsList is wr :
